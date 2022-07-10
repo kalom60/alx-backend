@@ -41,8 +41,8 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        function to make the user does not
-        miss items from dataset when changing page
+        Return data about a page from an
+        index and with a specified size.
         """
         assert index is not None and \
                index >= 0 and \
