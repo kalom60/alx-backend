@@ -43,9 +43,10 @@ class Server:
         function to make the user does not
         miss items from dataset when changing page
         """
-        assert index is not None and \
+        assert type(index) is int and \
                index >= 0 and \
                index <= len(self.__indexed_dataset)
+
         data = []
         starter = index
         nxt_page = None
