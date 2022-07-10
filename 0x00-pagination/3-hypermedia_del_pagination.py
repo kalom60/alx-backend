@@ -45,7 +45,7 @@ class Server:
         """
         assert index is not None and \
                index >= 0 and \
-               index < len(self.__indexed_dataset)
+               index <= len(self.__indexed_dataset)
         data = []
         starter = index
         nxt_page = 0
