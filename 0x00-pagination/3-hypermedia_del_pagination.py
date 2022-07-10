@@ -46,14 +46,13 @@ class Server:
         assert type(index) is int and \
                index >= 0 and \
                index <= len(self.__indexed_dataset)
-
+        dataset = self.indexed_dataset()
         data = []
         starter = index
-        count = 0
         page = index + page_size
         while starter < page:
-            if starter in self.__indexed_dataset.keys():
-                data.append(self.__indexed_dataset[starter])
+            if starter in dataset.keys():
+                data.append(dataset[starter])
             else:
                 page += 1
             starter += 1
