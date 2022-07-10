@@ -42,6 +42,6 @@ class Server:
         assert page > 0 and page_size > 0
         all_names = self.dataset()
         start, end = index_range(page, page_size)
-        if (start * end) > len(all_names):
+        if start > len(all_names):
             return []
         return all_names[start:end]
