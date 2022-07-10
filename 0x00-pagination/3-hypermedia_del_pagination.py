@@ -4,7 +4,6 @@ Deletion-resilient hypermedia pagination
 """
 
 import csv
-import math
 from typing import List, Dict
 
 
@@ -41,8 +40,8 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        Return data about a page from an
-        index and with a specified size.
+        function to make the user does not
+        miss items from dataset when changing page
         """
         assert index is not None and \
                index >= 0 and \
