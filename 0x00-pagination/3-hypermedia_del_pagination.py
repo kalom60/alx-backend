@@ -48,10 +48,8 @@ class Server:
               page_size - the number of items on the page
               data - the data in the page itself
         """
-        assert type(index) is int and \
-               index >= 0 and \
-               index <= len(self.__indexed_dataset)
         dataset = self.indexed_dataset()
+        assert type(index) is int and index in range(len(dataset))
         data = []
         starter = index
         page = index + page_size
