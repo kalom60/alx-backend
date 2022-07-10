@@ -48,7 +48,7 @@ class Server:
                index <= len(self.__indexed_dataset)
         data = []
         starter = index
-        nxt_page = 0
+        nxt_page = None
         count = 0
         for i, value in self.__indexed_dataset.items():
             if i >= starter and count < page_size:
