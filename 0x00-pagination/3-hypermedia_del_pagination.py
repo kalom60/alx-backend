@@ -46,12 +46,11 @@ class Server:
         assert index is not None and \
                index >= 0 and \
                index <= len(self.__indexed_dataset)
-        dataset = self.indexed_dataset()
         data = []
         starter = index
         nxt_page = None
         count = 0
-        for i, value in dataset.items():
+        for i, value in self.__indexed_dataset.items():
             if i >= starter and count < page_size:
                 data.append(value)
                 count += 1
@@ -61,6 +60,6 @@ class Server:
         return {
                 'index': index,
                 'data': data,
-                'page_size': page_size,
+                'page_size': len(data),
                 'next_index': nxt_page
                 }
