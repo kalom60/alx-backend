@@ -40,8 +40,13 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        function to make the user does not
-        miss items from dataset when changing page
+        Return dict of pagination data.
+            Dict key/value pairs consist of the following:
+              index - the start index of the page
+              next_index - the start index of the next page
+              page_size
+              page_size - the number of items on the page
+              data - the data in the page itself
         """
         assert type(index) is int and \
                index >= 0 and \
