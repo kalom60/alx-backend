@@ -49,18 +49,17 @@ class Server:
 
         data = []
         starter = index
-        nxt_page = None
         count = 0
-        for i, value in self.__indexed_dataset.items():
-            if i >= starter and count < page_size:
-                data.append(value)
-                count += 1
-            elif count == page_size:
-                nxt_page = i
-                break
+        page = index + page_size
+        while starter < page:
+            if starter in self.__indexed_dataset.keys():
+                data.append(self.__indexed_dataset[starter])
+            else:
+                page += 1
+            starter += 1
         return {
                 'index': index,
                 'data': data,
                 'page_size': len(data),
-                'next_index': nxt_page
+                'next_index': page
                 }
