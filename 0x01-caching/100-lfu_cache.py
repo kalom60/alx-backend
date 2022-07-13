@@ -20,7 +20,7 @@ class LFUCache(BaseCaching):
         """
         keys = []
         if key is not None and item is not None:
-            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
+            if len(self.cache_data) == BaseCaching.MAX_ITEMS:
                 if key not in self.cache_data:
                     for i in sorted(self.cache_data.keys()):
                         if i not in self.uses:
