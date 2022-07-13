@@ -20,21 +20,21 @@ class LFUCache(BaseCaching):
         """
         keys = []
         if key is not None and item is not None:
-            if (len(self.cache_data) < BaseCaching.MAX_ITEMS):
-                self.cache_data[key] = item
-            else:
-                if (key in self.cache_data):
-                    self.cache_data[key] = item
-                else:
+            if len(self.cache_data) == BaseCaching.MAX_ITEMS:
+                if key not in self.cache_data:
                     for i in sorted(self.cache_data.keys()):
                         if i not in self.uses:
                             keys.append(i)
                     if self.cache_data.keys() == self.uses.keys():
-                        keys.append(list(self.cache_data.keys())[0])
+                        keys.append(self.get_first_item())
                     first_key = keys[0]
-                    print(f'DISCARD: {first_key}')
                     self.cache_data.pop(first_key)
+                    print(f'DISCARD: {first_key}')
                     self.cache_data[key] = item
+                else:
+                    self.cache_data[key] = item
+            else:
+                self.cache_data[key] = item
 
     def get(self, key):
         """return data based on its key"""
@@ -42,5 +42,10 @@ class LFUCache(BaseCaching):
             item = self.cache_data.get(key)
             if key not in self.uses:
                 self.uses[key] = item
-            return self.cache_data.get(key)
+            return self.cache_data.get(key, None)
         return None
+
+    def get_first_item(self):
+        """return first item key from the dict"""
+        for key in self.cache_data:
+            return key
