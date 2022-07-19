@@ -2,16 +2,11 @@
 """
 Flask app
 """
-from flask import (
-    Flask,
-    render_template,
-    request,
-    g
-)
+from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
 
-class Config(object):
+class Config:
     """
     Configuration for Babel
     """
@@ -34,10 +29,7 @@ users = {
 
 
 def get_user():
-    """
-    Returns a user dictionary or None if ID value can't be found
-    or if 'login_as' URL parameter was not found
-    """
+    """check if request has id and return its id value or None"""
     id = request.args.get('login_as', None)
     if id is not None and int(id) in users.keys():
         return users.get(int(id))
@@ -46,9 +38,7 @@ def get_user():
 
 @app.before_request
 def before_request():
-    """
-    Add user to flask.g if user is found
-    """
+    """calls get_user method and set it global on flask.g.user"""
     user = get_user()
     g.user = user
 
@@ -56,7 +46,7 @@ def before_request():
 @babel.localeselector
 def get_locale():
     """
-    Select and return best language match based on supported languages
+    create a locale from request
     """
     locale = request.args.get('locale')
     if locale in app.config['LANGUAGES']:
@@ -65,10 +55,8 @@ def get_locale():
 
 
 @app.route('/')
-def index() -> str:
-    """
-    Handles / route
-    """
+def index():
+    """render 5-index.html"""
     return render_template('5-index.html')
 
 
