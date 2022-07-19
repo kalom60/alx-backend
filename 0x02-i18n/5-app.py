@@ -45,7 +45,7 @@ def before_request():
 @babel.localeselector
 def get_locale():
     """create a locale from request"""
-    locale = request.args.get('locale')
+    locale = request.args.get('locale', None)
     if locale in app.config['LANGUAGES']:
         return locale
     return request.accept_languages.best_match(app.config["LANGUAGES"])

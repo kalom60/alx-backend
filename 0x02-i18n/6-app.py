@@ -47,17 +47,16 @@ def get_locale():
     """
     create a locale from request
     """
-    locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
-        return loc
-    if g.user:
-        local = g.user.get('locale')
-        if local and local in app.config['LANGUAGES']:
-            return local
-    header = request.headers.get('locale')
-    if header in app.config['LANGUAGES']:
+    locale = request.args.get('locale', '')
+    if locale in app.config["LANGUAGES"]:
+        return locale
+    user_data = getattr(g, 'user', None)
+    if user_data and user_data['locale'] in app.config["LANGUAGES"]:
+        return user_data['locale']
+    header = request.headers.get('locale', '')
+    if header in app.config["LANGUAGES"]:
         return header
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return app.config['BABEL_DEFAULT_LOCALE']
 
 
 @app.route('/')

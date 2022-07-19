@@ -3,7 +3,8 @@
 from flask import Flask, render_template, request, g
 from typing import Dict, Union
 from flask_babel import Babel
-from pytz import timezone, pytz.exceptions
+from pytz import timezone
+import pytz.exceptions
 
 
 class Config:
@@ -49,17 +50,17 @@ def get_locale():
     create a locale from request based on
     a user’s preferred local if it is supported
     """
-    locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
-        return loc
-    if g.user:
-        local = g.user.get('locale')
-        if local and local in app.config['LANGUAGES']:
-            return local
-    header = request.headers.get('locale')
-    if header in app.config['LANGUAGES']:
+    locale = request.args.get('locale', '')
+    if locale in app.config["LANGUAGES"]:
+        return locale
+    user_data = getattr(g, 'user', None)
+    if user_data and user_data['locale'] in app.config["LANGUAGES"]:
+        return user_data['locale']
+    header = request.headers.get('locale', '')
+    if header in app.config["LANGUAGES"]:
         return header
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return app.config['BABEL_DEFAULT_LOCALE']
+
 
 
 @babel.timezoneselector
@@ -71,13 +72,13 @@ def get_timezone():
     try:
         return timezone(tzone).zone
     except pytz.exceptions.UnknownTimeZoneError:
-        pass
+        return app.config['BABEL_DEFAULT_TIMEZONE']
 
 
 @app.route('/')
 def index():
-    """render 6-index.html"""
-    return render_template('6-index.html')
+    """render 7-index.html"""
+    return render_template('7-index.html')
 
 
 if __name__ == '__main__':
