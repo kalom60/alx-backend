@@ -45,8 +45,7 @@ def before_request():
 @babel.localeselector
 def get_locale():
     """
-    create a locale from request based on
-    a user’s preferred local if it is supported
+    create a locale from request
     """
     locale = request.args.get('locale')
     if locale in app.config['LANGUAGES']:
