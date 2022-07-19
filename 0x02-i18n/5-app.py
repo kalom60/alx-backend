@@ -26,13 +26,13 @@ user = {
 
 def get_user() -> Union[Dict, None]:
     """check if request has id and return its id value or None"""
-    login_as = request.args.get("login_as")
-    if login_as is None:
-        return None
-    if int(login_as) not in user:
-        return None
-    if int(login_as) in user:
-        return user[int(login_as)]
+    login_as = request.args.get('login_as')
+    if login_as:
+        try:
+            return user.get(int(login_as))
+        except ValueError:
+            return None
+    return None
 
 
 @app.before_request
