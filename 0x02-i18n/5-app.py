@@ -25,7 +25,7 @@ user = {
 
 
 def get_user() -> Union[Dict, None]:
-    """"""
+    """check if request has id and return its id value or None"""
     login_as = request.args.get("login_as")
     if login_as is None:
         return None
@@ -37,7 +37,7 @@ def get_user() -> Union[Dict, None]:
 
 @app.before_request
 def before_request():
-    """"""
+    """calls get_user method and set it global on flask.g.user"""
     user = get_user()
     g.user = user
 
